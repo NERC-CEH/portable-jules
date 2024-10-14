@@ -1,6 +1,7 @@
 build/
 reference/
 run/**/outputs
+roses/
 
 # Built from source
 jules/
