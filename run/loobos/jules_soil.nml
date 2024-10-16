@@ -1,0 +1,8 @@
+&JULES_SOIL
+dzsoil_io=0.1,0.25,0.65,2.0,
+l_dpsids_dsdz=.true.,
+l_holdwater=.true.,
+l_soil_sat_down=.true.,
+l_vg_soil=.false.,
+soilhc_method=2,
+/

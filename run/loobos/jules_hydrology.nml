@@ -1,0 +1,11 @@
+&JULES_HYDROLOGY
+l_hydrology=T,
+l_var_rainfrac=T,
+l_top=T,
+l_baseflow_corr=F,
+nfita=20,
+ti_max=10.0,
+ti_wetl=1.5,
+zw_max=6.0,
+/
+

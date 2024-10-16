@@ -1,9 +1,9 @@
 &JULES_INITIAL
   total_snow = T,
 
-  nvars = 8,
-  var       = 'canopy'  'tstar_tile'   'cs'  'gs'  'rgrain'  'snow_tile'  'sthuf'  't_soil',
-  use_file  =       F             F      F     F         F            F        T         T ,
-  const_val =     0.0        276.78   12.1   0.0      50.0          0.0
+  nvars = 6,
+  var       = 'canopy'  'tstar_tile'   'cs'  'snow_tile'  'sthuf'  't_soil',
+  use_file  =       F             F      F            F        T         T ,
+  const_val =     0.0        276.78   12.1          0.0
   file='inputs/initial_conditions.dat',
 /

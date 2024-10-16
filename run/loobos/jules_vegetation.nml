@@ -1,0 +1,7 @@
+&JULES_VEGETATION
+can_model=2,
+can_rad_mod=5,
+l_vegcan_soilfx=.true.,
+photo_model=1,
+stomata_model=1,
+/
