@@ -1,0 +1,22 @@
+&JULES_INPUT_GRID
+  nx = 1,
+  ny = 1,
+/
+
+&JULES_LATLON
+  l_coord_latlon = T
+  nvars     = 2,
+  var       = 'latitude','longitude',
+  use_file  = .false., .false.,
+  const_val = 52.168, 5.744,
+/
+
+&JULES_LAND_FRAC /
+
+&JULES_MODEL_GRID /
+
+&JULES_NLSIZES /
+
+&JULES_SURF_HGT /
+
+&JULES_Z_LAND /

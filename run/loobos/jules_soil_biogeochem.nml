@@ -1,1 +1,12 @@
-&JULES_SOIL_BIOGEOCHEM /
+&JULES_SOIL_BIOGEOCHEM
+q10_soil=2.0,
+kaps=0.5e-8,
+q10_ch4_cs=3.7,
+q10_ch4_npp=1.5,
+q10_ch4_resps=1.5,
+const_ch4_cs=7.41e-12,
+const_ch4_npp=9.99e-3,
+const_ch4_resps=4.36e-3,
+t0_ch4=273.15,
+ch4_cpow=1.0,
+/

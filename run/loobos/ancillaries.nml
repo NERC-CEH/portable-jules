@@ -1,5 +1,5 @@
 &JULES_FRAC
-file='inputs/jules_frac.dat',
+file='inputs/tile_fractions.dat',
 /
 
 &JULES_SOIL_PROPS
@@ -17,10 +17,6 @@ var='fexp','ti_mean','ti_sig',
 const_val=1.0,6.0,2.0,
 /
 
-&JULES_CO2
-co2_mmr=0.0005941,
-/
-
 &JULES_AGRIC
 /
 
@@ -28,5 +24,9 @@ co2_mmr=0.0005941,
 /
 
 &JULES_OVERBANK_PROPS
+/
+
+&JULES_CO2
+co2_mmr=0.0005941,
 /
 

@@ -5,4 +5,10 @@ l_holdwater=.true.,
 l_soil_sat_down=.true.,
 l_vg_soil=.false.,
 soilhc_method=2,
+
+sm_levels=4,
+confrac=0.3,
+cs_min=1.0e-6,
+zsmc=1.0,
+zst=1.0,
 /

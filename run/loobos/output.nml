@@ -1,0 +1,18 @@
+&JULES_OUTPUT
+dump_period=1,
+dump_period_unit='Y',
+nprofiles=1,
+output_dir='outputs',
+run_id='loobos',
+/
+
+&JULES_OUTPUT_PROFILE
+profile_name='Timestep',
+file_period=0,
+output_main_run=T,
+output_initial=T,
+output_period=1800,
+output_type=22*'M',
+nvars=22,
+var='pstar','tl1','tstar','tstar_gb','qw1','wind','lw_down', 'sw_down','sw_net','rad_net','precip','frac','lai','runoff', 'fwetl','fch4_wetl','esoil_gb','ecan_gb','fsmc_gb', 'fsat','gpp_gb','npp_gb'
+/
