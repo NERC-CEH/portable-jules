@@ -1,4 +1,4 @@
-&jules_nvegparm
+&JULES_NVEGPARM
 albsnc_nvg_io=0.40,0.80,0.80,0.80,
 albsnf_nvg_io=0.18,0.012,-1.00,0.75,
 catch_nvg_io=0.50,0.00,0.00,0.00,

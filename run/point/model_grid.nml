@@ -1,6 +1,6 @@
 &JULES_INPUT_GRID
   nx = 1,
-  ny = 1
+  ny = 1,
 /
 
 &JULES_LATLON
@@ -8,7 +8,7 @@
   nvars     = 2,
   var       = 'latitude','longitude',
   use_file  = .false., .false.,
-  const_val = 52.168, 5.744
+  const_val = 52.168, 5.744,
 /
 
 &JULES_LAND_FRAC /
@@ -17,7 +17,6 @@
 
 &JULES_NLSIZES /
 
-&JULES_SURF_HGT
-  zero_height = T
-/
+&JULES_SURF_HGT /
 
+&JULES_Z_LAND /

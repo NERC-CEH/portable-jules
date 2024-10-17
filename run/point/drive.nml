@@ -9,8 +9,8 @@
   var    = 'sw_down'  'lw_down'  'tot_rain'  'tot_snow'   't'  'wind'  'pstar'   'q',
   interp =      'nf'       'nf'        'nf'        'nf'  'nf'    'nf'     'nf'  'nf',
 
-  diff_frac_const = 0.1,
+  diff_frac_const = 0.4,
   t_for_con_rain  = 293.15
-  z1_uv_in = 100
-  z1_tq_in = 100
+  z1_uv_in = 10.0
+  z1_tq_in = 10.0
 /

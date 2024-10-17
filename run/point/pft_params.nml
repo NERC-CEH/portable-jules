@@ -1,4 +1,4 @@
-&jules_pftparm
+&JULES_PFTPARM
 a_wl_io=0.65,0.65,0.005,0.005,0.1,
 a_ws_io=10,10,1,1,10,
 albsnc_max_io=0.25,0.25,0.6,0.6,0.4,
@@ -50,9 +50,6 @@ q10_leaf_io=5*2,
 r_grow_io=5*0.25,
 rootd_ft_io=3,1,0.5,0.5,0.5,
 sigl_io=0.0375,0.1,0.025,0.05,0.05,
-sox_a_io=5*0.0,
-sox_p50_io=5*0.0,
-sox_rp_min_io=5*0.0,
 tleaf_of_io=273.15,243.15,258.15,258.15,243.15,
 tlow_io=0,-5,0,13,0,
 tupp_io=36,31,36,45,36,

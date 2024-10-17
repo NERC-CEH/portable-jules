@@ -1,4 +1,4 @@
-&jules_temp_fixes
+&JULES_TEMP_FIXES
 ctile_orog_fix=2,
 l_accurate_rho=.true.,
 l_dtcanfix=.true.,

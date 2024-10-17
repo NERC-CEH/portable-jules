@@ -3,8 +3,8 @@
   nvars = 9,
   var	    = 'canopy'  'tstar_tile'   'cs'  'gs'  'sthzw'    'zw'  'sthuf'  't_soil'  'snow_tile',
   use_file  =       F             F      F     F        F       F        T         T 	      T,
-  const_val =	  0.0	     276.78   12.1   0.0      50.0  0.759      3.0       0.0        0.0
-  file='inputs/initial_conditions.dat',
+  const_val =	  0.0	     276.78   12.1   0.0      50.0  0.759      3.0       0.0        0.0,
+  file='inputs/initial_conditions_bb219.dat',
 
   total_snow = T,
 /

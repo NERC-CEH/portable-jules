@@ -1,3 +1,2 @@
-&jules_prescribed
-n_datasets=0,
-/
+&JULES_PRESCRIBED /
+&JULES_PRESCRIBED_DATASET /

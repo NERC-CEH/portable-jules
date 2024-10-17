@@ -1,4 +1,4 @@
-&jules_radiation
+&JULES_RADIATION
 i_sea_alb_method=1,
 l_albedo_obs=.false.,
 l_cosz=.true.,

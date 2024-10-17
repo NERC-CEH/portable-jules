@@ -1,8 +1,4 @@
 &JULES_HYDROLOGY
-l_pdm=F,
-l_top=F,
-l_limit_gsoil=F,
-l_baseflow_corr=.false.,
 l_hydrology=.true.,
 l_var_rainfrac=.true.,
 /

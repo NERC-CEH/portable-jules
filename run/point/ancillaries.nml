@@ -1,26 +1,23 @@
 &JULES_FRAC
-file='inputs/jules_frac.dat',
+file='inputs/tile_fractions.dat',
 /
 
 &JULES_SOIL_PROPS
-nvars=9,
-var='b','sathh','satcon','sm_sat','sm_crit','sm_wilt','hcap',
-'hcon','albsoil',
-use_file=F,F,F,F,F,F,F,F,F,
-const_val=6.63,0.04946,0.004715,0.45815,0.242433,0.136328,1185676.0,
-0.226873,0.11,0.2
-const_z=T,
+  nvars=9,
+  var       =   'b'  'sathh'  'satcon'  'sm_sat'  'sm_crit'  'sm_wilt'     'hcap'    'hcon'  'albsoil',
+  use_file  =    F        F         F         F          F          F          F         F          F,
+  const_val = 6.63  0.04946  0.004715   0.45815   0.242433   0.136328  1185676.0  0.226873       0.11,
+  const_z=T,
 /
 
-&jules_top
-/
+&JULES_TOP /
 
-&jules_agric
-/
-&jules_rivers_props
-/
-&jules_overbank_props
-/
-&jules_co2
+&JULES_AGRIC /
+
+&JULES_RIVERS_PROPS /
+
+&JULES_OVERBANK_PROPS /
+
+&JULES_CO2
 co2_mmr=0.0005941,
 /
