@@ -17,6 +17,9 @@ workbench/
 # python virtual environment
 .venv/
 
+# Analysis outputs
+*.png
+
 # notebooks
 *.ipynb
 .ipynb_checkpoints/

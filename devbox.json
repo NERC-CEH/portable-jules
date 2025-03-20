@@ -23,7 +23,7 @@
   ],
   "env": {
     "DEVBOX_PROMPT_MODIFIER": "📦 ",
-    "VENV_DIR": ".venv",
+    "VENV_DIR":               ".venv",
   },
   "shell": {
     "init_hook": [
@@ -43,8 +43,8 @@
       "jules": "bash $DEVBOX_PROJECT_ROOT/scripts/jules_run.sh $@",
       "loobos": [
         "bash $DEVBOX_PROJECT_ROOT/scripts/jules_run.sh -d $DEVBOX_PROJECT_ROOT/examples/loobos $DEVBOX_PROJECT_ROOT/examples/loobos/config",
-        "echo \"yay\""
-      ]
+        "python $DEVBOX_PROJECT_ROOT/examples/loobos/analysis.py",
+      ],
     },
   },
 }

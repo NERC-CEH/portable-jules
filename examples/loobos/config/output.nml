@@ -7,7 +7,7 @@ run_id='loobos',
 /
 
 &JULES_OUTPUT_PROFILE
-profile_name='Timestep',
+profile_name='test',
 file_period=0,
 output_main_run=T,
 output_initial=T,

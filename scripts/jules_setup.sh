@@ -7,8 +7,7 @@ if [[ ! $DEVBOX_SHELL_ENABLED -eq 1 ]]; then
 fi
 
 curr_dir=$PWD
-root=$DEVBOX_PROJECT_ROOT
-tmpdir=$root/tmp
+tmpdir=$DEVBOX_PROJECT_ROOT/tmp
 
 mkdir -v $tmpdir
 cd $tmpdir
@@ -49,3 +48,6 @@ fi
 cd $curr_dir
 
 rmdir -v $tmpdir
+
+# Install Python packages
+python -m pip install -r $DEVBOX_PROJECT_ROOT/requirements.txt
