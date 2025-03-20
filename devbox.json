@@ -23,7 +23,7 @@
   ],
   "env": {
     "DEVBOX_PROMPT_MODIFIER": "📦 ",
-    "VENV_DIR":               ".venv",
+    "VENV_DIR": ".venv",
   },
   "shell": {
     "init_hook": [

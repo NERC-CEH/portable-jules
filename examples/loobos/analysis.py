@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 import xarray as xr
 
 
-DAY: int = 60 * 60 * 24
-
 here = Path(__file__).parent
 data_path = here / "outputs" / "loobos.test.nc"
 plot_dir = here / "plots"
