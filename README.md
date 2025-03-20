@@ -2,9 +2,10 @@
 
 The [Joint UK Land Environment Simulator](https://jules.jchmr.org/) is a [land surface model](https://en.wikipedia.org/wiki/Land_surface_models_(climate)) that has been developed over the last 20 years by a wide community of UK researchers coordinated by the [Met Office](https://www.metoffice.gov.uk/) and the [Centre for Ecology Hydrology](https://www.ceh.ac.uk/).
 
-This repository currently serves to document progress towards the development of some minimal, pedagogical examples of JULES simulations that can be run on a typical desktop computer running a Unix-based OS, or on services such as [DataLabs](https://datalab.datalabs.ceh.ac.uk/).
+This repository contains tools that make it easy to run JULES on a typical personal computer running a Unix-based OS, or on cloud-based services such as [DataLabs](https://datalab.datalabs.ceh.ac.uk/).
 
-**Health warning:** I have zero prior familiarity with JULES and have limited knowledge of FORTRAN. My contribution here is to demonstrate a means of making JULES more portable, and I am learning about how the code works as I go.
+> [!WARNING]
+> I have no prior familiarity with JULES or land surface science, and limited knowledge of FORTRAN. My contribution here is to demonstrate a means of making JULES more portable.
 
 
 ## Quickstart
