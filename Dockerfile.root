@@ -1,0 +1,17 @@
+FROM jetpackio/devbox-root-user:latest
+
+# Set /code as the working directory for subsequent commands
+WORKDIR /code
+
+# Copy files to container
+COPY devbox.json devbox.json
+COPY devbox.lock devbox.lock
+
+# Execute `devbox run` for 3 commands on r.h.s
+# 1. echo once environment has been set up
+# 2. Run garbage collection in nix-store
+# 3. Run optimisations in nix-store (e.g. remove duplications)
+RUN devbox run -- echo "Installed Packages." && nix-store --gc && nix-store --optimise
+
+# Run 'devbox shell' when the container is started
+CMD ["devbox", "shell"]

@@ -1,0 +1,26 @@
+FROM jetpackio/devbox:latest
+
+# Set /code as the working directory for subsequent commands
+WORKDIR /code
+
+# Subsequent commands are run as root
+USER root:root
+
+# Create the code directory and change its ownership to user
+RUN mkdir -p /code && chown ${DEVBOX_USER}:${DEVBOX_USER} /code
+
+# Subsequent commands are run as user
+USER ${DEVBOX_USER}:${DEVBOX_USER}
+
+# Copy files to container
+COPY --chown=${DEVBOX_USER}:${DEVBOX_USER} devbox.json devbox.json
+COPY --chown=${DEVBOX_USER}:${DEVBOX_USER} devbox.lock devbox.lock
+
+# Execute `devbox run` for 3 commands on r.h.s
+# 1. echo once environment has been set up
+# 2. Run garbage collection in nix-store
+# 3. Run optimisations in nix-store (e.g. remove duplications)
+RUN devbox run -- echo "Installed Packages." && nix-store --gc && nix-store --optimise
+
+# Run 'devbox shell' when the container is started
+CMD ["devbox", "shell"]
