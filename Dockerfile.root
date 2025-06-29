@@ -1,4 +1,4 @@
-FROM jetpackio/devbox-root-user:latest
+FROM jetpackio/devbox-root-user:latest AS devbox
 
 # Set /code as the working directory for subsequent commands
 WORKDIR /code
@@ -13,5 +13,20 @@ COPY devbox.lock devbox.lock
 # 3. Run optimisations in nix-store (e.g. remove duplications)
 RUN devbox run -- echo "Installed Packages." && nix-store --gc && nix-store --optimise
 
-# Run 'devbox shell' when the container is started
-CMD ["devbox", "shell"]
+FROM devbox AS jules
+
+# Download and extract FCM v2021.05.0 from github
+# ADD --chown=${DEVBOX_USER}:${DEVBOX_USER} https://github.com/metomi/fcm/archive/refs/tags/2021.05.0.tar.gz /code/fcm
+COPY fcm /code/fcm
+
+# Copy JULES source code (TODO: download from source?)
+COPY jules /code/jules
+
+# Copy scripts
+COPY scripts /code/scripts
+
+# Build JULES
+RUN devbox run build
+
+# Create entry point
+ENTRYPOINT ["devbox", "run", "jules"]
