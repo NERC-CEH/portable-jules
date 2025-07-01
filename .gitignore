@@ -26,3 +26,7 @@ workbench/
 
 # Credentials file
 .env
+
+# container images
+*.tar
+*.tar.gz
