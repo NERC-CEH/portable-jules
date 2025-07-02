@@ -21,7 +21,6 @@
     "subversion@latest",
     "which@latest",
   ],
-  "env_from": ".env",
   "env": {
     "DEVBOX_PROMPT_MODIFIER": "📦 ",
     "VENV_DIR": ".venv",
@@ -39,7 +38,7 @@
     ],
     "scripts": {
       "hello": "bash $DEVBOX_PROJECT_ROOT/scripts/hello.sh",
-      "setup": "bash $DEVBOX_PROJECT_ROOT/scripts/setup.sh $1",
+      "setup": "bash $DEVBOX_PROJECT_ROOT/scripts/setup.sh $@",
       "build": "bash $DEVBOX_PROJECT_ROOT/scripts/build.sh",
       "jules": "bash $DEVBOX_PROJECT_ROOT/scripts/jules.sh $@",
       "loobos": [
