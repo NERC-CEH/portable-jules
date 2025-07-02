@@ -198,7 +198,7 @@ JULES still needs to load the namelists and inputs, and we did not include these
 
 ```sh
 cd examples/loobos
-docker run -v "$(pwd)":/app/run jules:vn7.9 jules run run/config
+docker run -v "$(pwd)":/app/run jules:vn7.9 jules -d run run/config
 ```
 
 It will speed things up if the directory being linked is not too large, i.e. if the run directory (`examples/loobos` above) only contains the necessary inputs and namelists, and not a bunch of other stuff. 
