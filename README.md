@@ -47,7 +47,7 @@ devbox run hello
 
 # Download FCM and JULES
 # NOTE: this step requires MOSRS credentials
-devbox run setup
+devbox run --env-file .env setup
 
 # Build JULES
 devbox run build
