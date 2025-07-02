@@ -17,13 +17,11 @@
     "perl538Packages.ConfigIniFiles@latest",
     "perl538Packages.DBDSQLite@latest",
     "perl538Packages.XMLParser@latest",
-    "python@3.12",
     "subversion@latest",
     "which@latest",
   ],
   "env": {
     "DEVBOX_PROMPT_MODIFIER": "📦 ",
-    "VENV_DIR": ".venv",
   },
   "shell": {
     "init_hook": [
@@ -33,18 +31,13 @@
       "export JULES_NETCDF=netcdf",
       "export JULES_NETCDF_PATH=$DEVBOX_PROJECT_ROOT/.devbox/nix/profile/default",
       "export PATH=$JULES_BUILD_DIR/build/bin:$FCM_ROOT/bin:$PATH",
-      "echo \"Activating the python virtual environment in $VENV_DIR\"",
-      ". $VENV_DIR/bin/activate",
     ],
     "scripts": {
       "hello": "bash $DEVBOX_PROJECT_ROOT/scripts/hello.sh",
       "setup": "bash $DEVBOX_PROJECT_ROOT/scripts/setup.sh $@",
       "build": "bash $DEVBOX_PROJECT_ROOT/scripts/build.sh",
       "jules": "bash $DEVBOX_PROJECT_ROOT/scripts/jules.sh $@",
-      "loobos": [
-        "bash $DEVBOX_PROJECT_ROOT/scripts/jules.sh -d $DEVBOX_PROJECT_ROOT/examples/loobos $DEVBOX_PROJECT_ROOT/examples/loobos/config",
-        "python $DEVBOX_PROJECT_ROOT/examples/loobos/analysis.py",
-      ],
+      "loobos": "bash $DEVBOX_PROJECT_ROOT/scripts/jules.sh -d $DEVBOX_PROJECT_ROOT/examples/loobos $DEVBOX_PROJECT_ROOT/examples/loobos/config",
     },
   },
 }

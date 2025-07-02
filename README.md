@@ -180,6 +180,28 @@ vn7.8.1 = 29986
 vn7.9 = 30414
 ```
 
+## Docker container
+
+As part of the process of building a container image, the JULES source code needs to be downloaded, which requires MOSRS credentials. We cannot simply copy `.env` into the container since that would mean anyone could spin up the container and inspect it. We need to expose the contents of `.env` during the build in a secure way.
+
+This solution is to use a [_secret mount_](https://docs.docker.com/build/building/secrets/). In the following example, we mount `.env` during the build:
+
+```sh
+docker build --secret id=.env -t jules:vn7.9 .
+```
+
+The contents of `.env` are then accessible using: `RUN --mount=type=secret,id=.env,target=/app/.env` (the `WORKDIR` is `/app` at this point).
+
+The entry point for the container is (currently) `devbox run`, so to replicate `devbox run jules` using this container you would execute `docker run jules:vn7.9 jules`. I will probably change this soon (having `devbox run jules` as the entry point makes debugging hard, but there's probably a very obvious workaround).
+
+JULES still needs to load the namelists and inputs, and we did not include these in the container itself. To run the container you need to link the run directory and the namelists directory to the container filesystem. You can mount the run directory (assuming the namelists directory is below it) to an _unused_ location in the container filesystem (`/app/run` in this example).
+
+```sh
+cd examples/loobos
+docker run -v "$(pwd)":/app/run jules:vn7.9 jules run run/config
+```
+
+It will speed things up if the directory being linked is not too large, i.e. if the run directory (`examples/loobos` above) only contains the necessary inputs and namelists, and not a bunch of other stuff. 
 
 ## To do
 
