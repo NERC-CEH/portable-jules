@@ -4,7 +4,7 @@
 # JULES/FCM source and build
 jules/
 fcm/
-build/
+_build/
 
 # Computed outputs from examples
 examples/**/outputs
@@ -30,3 +30,8 @@ workbench/
 # container images
 *.tar
 *.tar.gz
+__pycache__/
+*.egg-info
+
+*.ipynb
+workbench/
