@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pjules"
+version = "0.1.0"
+description = "Python wrappers for running JULES"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "udocker>=1.3.17",
+]
+
+[dependency-groups]
+dev = [
+    "jupyter>=1.1.1",
+    "ruff>=0.12.1",
+]
