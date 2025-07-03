@@ -25,7 +25,6 @@
   },
   "shell": {
     "init_hook": [
-      "export REPO_ROOT=$(git rev-parse --show-toplevel)",
       "export FCM_ROOT=$DEVBOX_PROJECT_ROOT/fcm",
       "export JULES_ROOT=$DEVBOX_PROJECT_ROOT/jules",
       "export JULES_BUILD_DIR=$DEVBOX_PROJECT_ROOT/_build",
@@ -38,7 +37,7 @@
       "setup": "bash $DEVBOX_PROJECT_ROOT/scripts/setup.sh $@",
       "build": "bash $DEVBOX_PROJECT_ROOT/scripts/build.sh",
       "jules": "bash $DEVBOX_PROJECT_ROOT/scripts/jules.sh $@",
-      "loobos": "bash $DEVBOX_PROJECT_ROOT/scripts/jules.sh -d $REPO_ROOT/examples/loobos $REPO_ROOT/examples/loobos/config",
+      "loobos": "bash $DEVBOX_PROJECT_ROOT/scripts/jules.sh -d $DEVBOX_PROJECT_ROOT/examples/loobos $DEVBOX_PROJECT_ROOT/examples/loobos/config",
     },
   },
 }

@@ -1,0 +1,13 @@
+# devbox configuration
+.devbox/
+
+# JULES/FCM source and build
+jules/
+fcm/
+_build/
+
+# Computed outputs from examples
+examples/**/outputs
+stdout.log
+stderr.log
+
