@@ -1,12 +1,12 @@
 FROM jetpackio/devbox-root-user:latest AS devbox-jules
 
-# Copy files to container
-COPY devbox.json /app/devbox.json
-COPY devbox.lock /app/devbox.lock
-COPY scripts /app/scripts
+# Set /devbox as the working directory for subsequent commands
+WORKDIR /devbox
 
-# Set /app as the working directory for subsequent commands
-WORKDIR /app
+# Copy files to container
+COPY devbox/devbox.json .
+COPY devbox/devbox.lock .
+COPY devbox/scripts .
 
 # Install packages
 RUN devbox install
@@ -17,8 +17,8 @@ RUN devbox run -- nix-store --gc && nix-store --optimise
 FROM devbox-jules
 
 # Checkout Jules vn7.9 (rev 30414)
-RUN --mount=type=secret,id=.env,target=/app/.env \
-    devbox run --env-file /app/.env setup 30414
+RUN --mount=type=secret,id=.env,target=/devbox/.env \
+    devbox run --env-file /devbox/.env setup 30414
 
 # Build Jules
 RUN devbox run build
