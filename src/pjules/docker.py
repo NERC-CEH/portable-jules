@@ -2,6 +2,7 @@ from os import PathLike
 import pathlib
 import subprocess
 
+
 def setup(image_file: str | PathLike, name: str = "JULES") -> None:
     """
     Perform a one-time setup for running dockerised JULES.
@@ -39,13 +40,20 @@ def setup(image_file: str | PathLike, name: str = "JULES") -> None:
         ["udocker", "ps"],
     )
 
+
 class InvalidPath(Exception):
     pass
+
 
 class InvalidName(Exception):
     pass
 
-def run(namelists_dir: str | PathLike, run_dir: str | PathLike | None = None, container: str = "jules") -> None:
+
+def run(
+    namelists_dir: str | PathLike,
+    run_dir: str | PathLike | None = None,
+    container: str = "jules",
+) -> None:
     """
     Run a containerised version of JULES.
 
@@ -58,7 +66,7 @@ def run(namelists_dir: str | PathLike, run_dir: str | PathLike | None = None, co
       container: The name of the container to be run.
     """
     # Check valid name (possibly overkill)
-    try: 
+    try:
         subprocess.run(
             ["udocker", "inspect", container],
             stdout=subprocess.DEVNULL,
@@ -75,7 +83,7 @@ def run(namelists_dir: str | PathLike, run_dir: str | PathLike | None = None, co
     # We will mount `run_dir` to /root/run. Hence, `namelists_dir` must be a
     # subdirectory of `run_dir` or it will not be mounted.
     if not (namelists_dir.is_relative_to(run_dir)):
-        msg = f"`namelists_dir` must either be a subdirectory of `run_dir` or the same directory."
+        msg = "`namelists_dir` must either be a subdirectory of `run_dir` or the same directory."
         raise InvalidPath(msg)
 
     # This is where the cwd will end up in the container filesystem
@@ -92,6 +100,6 @@ def run(namelists_dir: str | PathLike, run_dir: str | PathLike | None = None, co
             "jules.sh",
             "-d",
             mount_point,
-            mount_point / namelists_dir.relative_to(run_dir)
+            mount_point / namelists_dir.relative_to(run_dir),
         ],
     )

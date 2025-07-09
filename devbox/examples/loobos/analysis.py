@@ -10,7 +10,6 @@ plot_dir = here / "plots"
 
 
 def main() -> None:
-
     assert data_path.exists()
     plot_dir.mkdir(exist_ok=True, parents=True)
 
@@ -25,7 +24,9 @@ def main() -> None:
     fig.savefig(plot_dir / "tstar.png")
 
     fig, ax = plt.subplots()
-    tstar.to_dataframe().drop(["latitude", "longitude"], axis=1).xs(1, level="tile").rolling(window="24h").mean().plot(ax=ax, label="daily average")
+    tstar.to_dataframe().drop(["latitude", "longitude"], axis=1).xs(
+        1, level="tile"
+    ).rolling(window="24h").mean().plot(ax=ax, label="daily average")
     ax.legend()
     fig.savefig(plot_dir / "tstar_rolling.png")
 

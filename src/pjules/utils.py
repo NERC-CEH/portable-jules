@@ -5,6 +5,7 @@ import pathlib
 # logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 class switch_dir:
     """Context manager for changing to *existing* directory."""
 
@@ -31,4 +32,3 @@ class switch_dir:
         if self.verbose:
             logger.info("Switching directory back to %s" % self.old)
         os.chdir(self.old)
-
