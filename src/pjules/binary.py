@@ -52,7 +52,6 @@ class JulesExeRunner:
         Args:
           namelists_dir: Path to the directory containing the namelists.
           run_dir: Path to the directory in which the jules executable will be run.
-                   (Must be a parent of `namelists_dir`!)
         """
         namelists_dir = pathlib.Path(namelists_dir).resolve()
         run_dir = namelists_dir if run_dir is None else pathlib.Path(run_dir).resolve()
