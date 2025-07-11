@@ -1,15 +1,5 @@
-# Developer workbench
-workbench/
-
-# python virtual environment
-.venv/
-
-# Analysis outputs
-*.png
-
-# notebooks
-*.ipynb
-.ipynb_checkpoints/
+# devbox configuration
+.devbox/
 
 # Credentials file
 .env
@@ -17,8 +7,19 @@ workbench/
 # container images
 *.tar
 *.tar.gz
-__pycache__/
-*.egg-info
 
-*.ipynb
+# JULES/FCM source and build
+_build/
+_download/
+fcm/
+jules/
+
+# Computed outputs from examples
+examples/**/outputs
+examples/**/plots
+stdout.log
+stderr.log
+*.png
+
+# Developer workbench
 workbench/
