@@ -1,4 +1,18 @@
-# Build using `docker build --secret id=.env -f Dockerfile.u -t jules:vn7.9 .`
+# Build from repository root:
+# 	`docker build --secret id=.env -f Dockerfile.u -t jules_ud:vn7.9 .`
+#
+# Save to tar.gz:
+# 	`docker save jules_ud | gzip > jules_ud.tar.gz
+#
+# Load into udocker:
+# 	`udocker load -i jules_ud.tar.gz jules`
+#
+# Build container:
+# 	`udocker create --name=jules jules`
+#
+# Run container from run directory:
+# 	`udocker run -v=$(pwd):/root/run jules -d /root/run /root/run/config`
+
 
 FROM jetpackio/devbox-root-user:latest
 
