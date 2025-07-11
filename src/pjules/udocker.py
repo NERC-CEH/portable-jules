@@ -14,52 +14,6 @@ class UdockerError(Exception):
     pass
 
 
-def create_image(image_file: str | PathLike, image_name: str = "JULES") -> None:
-    """
-    Perform a one-time setup for running dockerised JULES.
-
-    This function goes through the following steps:
-
-    1. `udocker install` to set up udocker.
-    2. `udocker load` to load an image from `image_file`.
-    3. `udocker verify` to check the loaded image isn't corrupted.
-
-    Args:
-      image_file: A `.tar` containing the image, created using `docker save`.
-      name: A name for the image.
-    """
-    # NOTE: could use udocker python API directly
-    # TODO: handle stdout/stderr
-    subprocess.run(
-        ["udocker", "load", "-i", image_file, image_name],
-    )
-    subprocess.run(
-        ["udocker", "verify", image_name],
-    )
-
-
-def create_container(image_name: str, container_name: str | None = None) -> None:
-    if container_name is None:
-        container_name = image_name.lower()
-
-    # Check valid image (possibly overkill)
-    try:
-        subprocess.run(
-            ["udocker", "inspect", image_name],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.PIPE,
-            text=True,
-            check=True,
-        )
-    except subprocess.CalledProcessError as exc:
-        subprocess.run(["udocker", "images"])
-        raise UdockerError(exc.stderr) from exc
-
-    subprocess.run(
-        ["udocker", "create", f"--name={container_name}", image_name],
-    )
-
-
 class JulesUdockerRunner:
     """
     Run an existing JULES docker container using udocker.
