@@ -2,15 +2,15 @@ import logging
 from os import PathLike
 import pathlib
 import subprocess
-from typing import Self
 
 log = logging.getLogger(__name__)
+
 
 class InvalidPath(Exception):
     pass
 
 
-class InvalidName(Exception):
+class UdockerError(Exception):
     pass
 
 
@@ -34,27 +34,51 @@ def create_image(image_file: str | PathLike, image_name: str = "JULES") -> None:
         ["udocker", "load", "-i", image_file, image_name],
     )
     subprocess.run(
-        ["udocker", "verify", name],
+        ["udocker", "verify", image_name],
     )
 
 
-def create_container(image_name: str, container_name: str) -> None:
+def create_container(image_name: str, container_name: str | None = None) -> None:
+    if container_name is None:
+        container_name = image_name.lower()
+
+    # Check valid image (possibly overkill)
+    try:
+        subprocess.run(
+            ["udocker", "inspect", image_name],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=True,
+        )
+    except subprocess.CalledProcessError as exc:
+        subprocess.run(["udocker", "images"])
+        raise UdockerError(exc.stderr) from exc
+
     subprocess.run(
-        ["udocker", "create", f"--name={name.lower()}", name],
+        ["udocker", "create", f"--name={container_name}", image_name],
     )
-    # If image not available, print
-    subprocess.run(
-        ["udocker", "images"]
-    )
-
 
 
 class JulesUdockerRunner:
-    def __init__(self, container_name: str) -> None:
+    """
+    Run an existing JULES docker container using udocker.
+
+    Parameters:
+      container_name: name of an _existing_ JULES container.
+      mount_point: an _absolute_ path in the container for mounting the run directory.
+
+    Notes:
+      List the containers udocker knows about using `udocker ps`
+    """
+
+    def __init__(
+        self, container_name: str, mount_point: str | PathLike = "/root/run"
+    ) -> None:
         # Check valid name (possibly overkill)
         try:
             subprocess.run(
-                ["udocker", "inspect", container],
+                ["udocker", "inspect", container_name],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.PIPE,
                 text=True,
@@ -62,21 +86,30 @@ class JulesUdockerRunner:
             )
         except subprocess.CalledProcessError as exc:
             # If container doesn't exist, run
-            subprocess.run(
-                ["udocker", "ps"],
-            )
-            raise InvalidName(exc.stderr) from exc
+            subprocess.run(["udocker", "ps"])
+            raise UdockerError(exc.stderr) from exc
+
+        mount_point = pathlib.Path(mount_point)
+        if not mount_point.is_absolute():
+            raise InvalidPath("mount point must be an absolute path")
 
         self._container_name = container_name
+        self._mount_point = mount_point
 
     @property
     def container_name(self) -> str:
         return self._container_name
 
-    def __str__(self) -> str:
-        return f"{type(self).__name__}(container_name = {self.container_name})"
+    @property
+    def mount_point(self) -> pathlib.Path:
+        return self._mount_point
 
-    def __call__(self, namelists_dir: str | PathLike, run_dir: str | PathLike | None = None) -> None:
+    def __str__(self) -> str:
+        return f"{type(self).__name__}(container_name={self.container_name}, mount_point={self.mount_point})"
+
+    def __call__(
+        self, namelists_dir: str | PathLike, run_dir: str | PathLike | None = None
+    ) -> None:
         """
         Run a containerised version of JULES.
 
@@ -84,7 +117,6 @@ class JulesUdockerRunner:
           namelists_dir: Path to the directory containing the namelists.
           run_dir: Path to the directory in which the jules executable will be run. This must be a parent of `namelists_dir`!
         """
-
         namelists_dir = pathlib.Path(namelists_dir).resolve()
         run_dir = namelists_dir if run_dir is None else pathlib.Path(run_dir).resolve()
 
@@ -94,33 +126,15 @@ class JulesUdockerRunner:
             msg = "`namelists_dir` must either be a subdirectory of `run_dir` or the same directory."
             raise InvalidPath(msg)
 
-        # This is where the cwd will end up in the container filesystem
-        mount_point = pathlib.Path("/root/run")
-
         subprocess.run(
             [
                 "udocker",
                 "run",
                 "-v",
-                f"{run_dir}:{mount_point}",
-                container,
-                "bash",
-                "jules.sh",
+                f"{run_dir}:{self.mount_point}",
+                self.container_name,
                 "-d",
-                mount_point,
-                mount_point / namelists_dir.relative_to(run_dir),
+                self.mount_point,
+                self.mount_point / namelists_dir.relative_to(run_dir),
             ],
         )
-
-    def teardown(self) -> None:
-        # delete container
-
-
-
-
-
-def run(
-    namelists_dir: str | PathLike,
-    run_dir: str | PathLike | None = None,
-    container: str = "jules",
-) -> None:
