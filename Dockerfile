@@ -1,11 +1,13 @@
-# Build using `docker build --secret id=.env -t jules:vn7.9 .`
+# Build from repository root:
+# 	`docker build --secret id=.env -t jules:vn7.9 .`
+#
+# Run from directory where you would usuall execute `jules.exe`:
+# 	`docker run -v=$(pwd):/devbox/run jules:vn7.9 -d run run/config`
 
 FROM jetpackio/devbox-root-user:latest
 
-# Create structure of working dir (/devbox & /devbox/scripts)
-RUN mkdir -p /devbox
-
 # Set /devbox as the working directory for subsequent commands
+RUN mkdir -p /devbox
 WORKDIR /devbox
 
 # Copy files to /devbox

@@ -16,10 +16,8 @@ jules/
 
 # Computed outputs from examples
 examples/**/outputs
-examples/**/plots
 stdout.log
 stderr.log
-*.png
 
 # Developer workbench
 workbench/
