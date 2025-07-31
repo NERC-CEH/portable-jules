@@ -3,7 +3,7 @@ if [[ ! $DEVBOX_SHELL_ENABLED -eq 1 ]]; then
     echo "WARNING: Running outside devbox shell. Did you mean to run this script with 'devbox run'?"
 fi
 
-# Check that jules.exe exists
+# Grab jules.exe from PATH, for now at least
 jules_exe=$(command -v jules.exe) || { echo "ERROR: jules.exe not found"; exit 1; }
 
 # If -d or -n is provided, it *needs* to be the first argument!
@@ -18,13 +18,13 @@ done
 namelists_subdir=""
 while getopts ":n:" opt; do
     case ${opt} in
-	n )
-	    namelists_subdir=$OPTARG
-	    ;;
-        \? )
-            echo "Usage: cmd [-n namelists_subdir ] exec_dir [exec_dir_2 ...]"
-            exit 1
-            ;;
+    n )
+        namelists_subdir=$OPTARG
+        ;;
+    \? )
+        echo "Usage: cmd [-n namelists_subdir ] exec_dir [exec_dir_2 ...]"
+        exit 1
+        ;;
     esac
 done
 
@@ -33,18 +33,20 @@ shift $((OPTIND -1))
 
 # Function to run JULES once, given a namelist directory
 run_jules() {
-    if [ ! -d "$1" ]; then
-        echo "Provide an existing directory in which to run Jules (given $1)"
-        return
+    if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
+        echo "Usage: run_jules jules_exe exec_dir namelists_dir"
+        exit 1
     fi
 
+    local jules_exe="$1"
+    local exec_dir="$2"
+    local namelists_subdir="$3"
     local curr_dir=$(pwd)
-    local exec_dir="$1"
 
     # Check that exec_dir exists
     if [ ! -d "$exec_dir" ]; then
         echo "Directory not found: $exec_dir"
-	exit 1
+        exit 1
     fi
 
     # If namelists_subdir not given, namelists_dir is exec_dir
@@ -57,11 +59,11 @@ run_jules() {
     # Check that namelists_dir exists and contains output.nml
     if [ ! -d "$namelists_dir" ]; then
         echo "Directory not found: $namelists_dir"
-	exit 1
+        exit 1
     fi
     if [ ! -f "${namelists_dir}/output.nml" ]; then
         echo "File not found: ${namelists_dir}/output.nml - no a valid namelists directory."
-	exit 1
+        exit 1
     fi
 
     # Hack to get absolute paths
@@ -79,7 +81,7 @@ run_jules() {
     # Create output_dir if it doesn't exist already
     mkdir -p -v "$output_dir"
 
-    echo "Running jules.exe $namelist_abspath"
+    echo "Running $jules_exe $namelist_abspath"
     "$jules_exe" "$namelist_abspath" > stdout.log 2>stderr.log
 
     # Echo any errors to stdout
@@ -95,13 +97,12 @@ run_jules() {
 
 export -f run_jules
 
-
 if [ "$#" -eq 1 ]; then
-    run_jules "$1"
+    run_jules "$jules_exe" "$1" "$namelists_subdir"
 
 elif [ "$#" -gt 1 ]; then
     echo "Running Jules in parallel with all provided directories"
-    parallel run_jules ::: "$@"
+    parallel run_jules "$jules_exe" {} "$namelists_subdir" ::: "$@"
 
 else
     echo "Usage: cmd [-n namelists_subdir ] exec_dir [exec_dir_2 ...]"
