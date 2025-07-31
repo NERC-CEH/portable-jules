@@ -6,55 +6,73 @@ fi
 # Check that jules.exe exists
 jules_exe=$(command -v jules.exe) || { echo "ERROR: jules.exe not found"; exit 1; }
 
-# If -d is provided, it *needs* to be the first argument!
+# If -d or -n is provided, it *needs* to be the first argument!
 for arg in "${@:2}"; do
-    if [[ "$arg" == "-d" ]]; then
-        echo "Usage: cmd [-d exec_dir] namelist_dir ..."
+    if [[ "$arg" == "-n" ]]; then
+        echo "Usage: cmd [-n namelists_subdir ] exec_dir [exec_dir_2 ...]"
         exit 1
     fi
 done
 
-# Check if -d is provided
-exec_dir=""
-while getopts ":d:" opt; do
+# Check if -n is provided
+namelists_subdir=""
+while getopts ":n:" opt; do
     case ${opt} in
-        d )
-            exec_dir=$OPTARG
-            ;;
+	n )
+	    namelists_subdir=$OPTARG
+	    ;;
         \? )
-        echo "Usage: cmd [-d exec_dir] namelist_dir ..."
-        exit 1
-        ;;
+            echo "Usage: cmd [-n namelists_subdir ] exec_dir [exec_dir_2 ...]"
+            exit 1
+            ;;
     esac
 done
 
-# Remove optional args (-d exec_dir) so that positional parameters can be accessed as usual
+# Remove optional args (-n namelists_subdir) so that positional parameters can be accessed as usual
 shift $((OPTIND -1))
 
 # Function to run JULES once, given a namelist directory
 run_jules() {
-    local curr_dir=$(pwd)
-    local namelist_dir="$1"
-
     if [ ! -d "$1" ]; then
-        echo "Provide an existing namelist directory (given $1)"
+        echo "Provide an existing directory in which to run Jules (given $1)"
         return
     fi
 
-    # Determine directory in which jules.exe should be executed
-    if [ -z "$exec_dir" ]; then
-        exec_dir="$namelist_dir"
-    fi  
+    local curr_dir=$(pwd)
+    local exec_dir="$1"
+
+    # Check that exec_dir exists
+    if [ ! -d "$exec_dir" ]; then
+        echo "Directory not found: $exec_dir"
+	exit 1
+    fi
+
+    # If namelists_subdir not given, namelists_dir is exec_dir
+    if [ -z "$namelists_subdir" ]; then
+        namelists_dir="$exec_dir"
+    else
+        namelists_dir="${exec_dir}/${namelists_subdir}"
+    fi
+
+    # Check that namelists_dir exists and contains output.nml
+    if [ ! -d "$namelists_dir" ]; then
+        echo "Directory not found: $namelists_dir"
+	exit 1
+    fi
+    if [ ! -f "${namelists_dir}/output.nml" ]; then
+        echo "File not found: ${namelists_dir}/output.nml - no a valid namelists directory."
+	exit 1
+    fi
 
     # Hack to get absolute paths
-    namelist_abspath=$(cd "$namelist_dir"; pwd)
+    namelist_abspath=$(cd "$namelists_dir"; pwd)
     exec_abspath=$(cd "$exec_dir"; pwd)
 
     # Extract output dir (hard-coded into output.nml)
     # TODO: should attempt to check if relative or absolute!
     cd "$namelist_abspath"
     output_dir=$(grep "output_dir" output.nml | sed -E "s/^[ \t]*output_dir\s*=\s*'([^']*)'.*/\1/")
-    
+
     echo "Changing directory to $exec_abspath"
     cd "$exec_abspath"
 
@@ -82,11 +100,11 @@ if [ "$#" -eq 1 ]; then
     run_jules "$1"
 
 elif [ "$#" -gt 1 ]; then
-    echo "Running Jules in parallel with all provided namelists"
+    echo "Running Jules in parallel with all provided directories"
     parallel run_jules ::: "$@"
 
 else
-    echo "Usage: cmd [-d exec_dir] namelist_dir ..."
+    echo "Usage: cmd [-n namelists_subdir ] exec_dir [exec_dir_2 ...]"
     exit 1
 fi
 

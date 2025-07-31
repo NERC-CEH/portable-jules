@@ -35,7 +35,7 @@
       "hello": "test $DEVBOX_SHELL_ENABLED -eq 1 && echo \"Hello $USER\"",
       "setup": "bash $DEVBOX_PROJECT_ROOT/setup.sh $@",
       "jules": "bash $DEVBOX_PROJECT_ROOT/jules.sh $@",
-      "loobos": "bash $DEVBOX_PROJECT_ROOT/jules.sh -d $DEVBOX_PROJECT_ROOT/examples/loobos $DEVBOX_PROJECT_ROOT/examples/loobos/config",
+      "loobos": "bash $DEVBOX_PROJECT_ROOT/jules.sh -n config $DEVBOX_PROJECT_ROOT/examples/loobos",
     },
   },
 }
