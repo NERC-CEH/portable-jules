@@ -101,7 +101,7 @@ If the setup script worked, the JULES executable should be located at `portable-
 
 ## Installing Python dependencies
 
-To work with netcdf input/output data from a `jupyter`` notebook, I recommend using `xarray`.
+To work with netcdf input/output data from a `jupyter` notebook, I recommend using `xarray`.
 
 
 The default Python environment in DataLabs is a very old one (3.11), containing old versions of `numpy`, `matplotlib` etc managed by the `conda` package manager. Because of this, it is important to make sure you install any additional Python packages using `conda install` as much as possible, so that they are compatible.
@@ -110,7 +110,9 @@ The default Python environment in DataLabs is a very old one (3.11), containing 
 conda install xarray
 ```
 
-If you try to `pip install xarray` it will most likely install a newer version that is incompatible with the `numpy` and `pandas` versions already present.
+> [!WARNING]
+> If you try to `pip install xarray` it will most likely install a newer version that is incompatible
+> with the `numpy` and `pandas` versions already present.
 
 Note that while it is possible to install a more recent version of Python and change the Python interpreter used by Jupyter, it requires a fair amount of technical know-how to do on DataLabs, even if it's something you're used to doing on your personal computer.
 
